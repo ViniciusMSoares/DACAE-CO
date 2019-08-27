@@ -1,11 +1,11 @@
-package services.impl;
+package server.services.impl;
 
 import java.util.List;
 
-import entities.Pessoa;
-import entities.DTOs.PessoaDTO;
-import repositories.PessoaRepository;
-import services.PessoaService;
+import server.entities.Pessoa;
+import server.entities.DTOs.PessoaDTO;
+import server.repositories.PessoaRepository;
+import server.services.PessoaService;
 
 public class PessoaServiceImpl implements PessoaService {
 	

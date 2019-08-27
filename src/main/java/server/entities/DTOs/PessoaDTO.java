@@ -1,4 +1,4 @@
-package entities.DTOs;
+package server.entities.DTOs;
 
 public class PessoaDTO {
 

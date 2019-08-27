@@ -1,6 +1,7 @@
-package entities;
+package server.entities;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 
@@ -9,6 +10,7 @@ import javax.persistence.InheritanceType;
 public class Pessoa {
 	
 	private String nome;
+	@Id
 	private String dni;
 	private String estado;
 	private String interesses;

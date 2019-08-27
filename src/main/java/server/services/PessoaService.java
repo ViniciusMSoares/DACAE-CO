@@ -1,9 +1,9 @@
-package services;
+package server.services;
 
 import java.util.List;
 
-import entities.Pessoa;
-import entities.DTOs.PessoaDTO;
+import server.entities.Pessoa;
+import server.entities.DTOs.PessoaDTO;
 
 public interface PessoaService {
 	

@@ -1,4 +1,4 @@
-package controllers;
+package server.controllers;
 
 import java.util.List;
 
@@ -13,15 +13,15 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import entities.Pessoa;
-import entities.DTOs.PessoaDTO;
-import services.PessoaService;
+import server.entities.Pessoa;
+import server.entities.DTOs.PessoaDTO;
+import server.services.PessoaService;
 
 @RestController
 @CrossOrigin
 public class PessoaController {
 	
-	@Autowired
+	//@Autowired
 	private PessoaService pessoaService;
 
 	@RequestMapping(value = "/pessoa", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
