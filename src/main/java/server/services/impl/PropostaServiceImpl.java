@@ -5,10 +5,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import server.entities.Deputado;
 import server.entities.PEC;
 import server.entities.PL;
 import server.entities.PLP;
 import server.entities.Proposta;
+import server.entities.Votacao;
 import server.entities.DTOs.PECDTO;
 import server.entities.DTOs.PLDTO;
 import server.entities.DTOs.PLPDTO;
@@ -17,6 +19,8 @@ import server.repositories.PECRepository;
 import server.repositories.PLPRepository;
 import server.repositories.PLRepository;
 import server.repositories.PropostaRepository;
+import server.services.PartidoService;
+import server.services.PessoaService;
 import server.services.PropostaService;
 
 @Service
@@ -33,6 +37,15 @@ public class PropostaServiceImpl implements PropostaService {
 	
 	@Autowired
 	private PECRepository pecRepository;
+	
+	@Autowired
+	private PessoaService pessoaService;
+	
+	@Autowired
+	private PartidoService partidoService;
+	
+	@Autowired
+	private PropostaService propostaService;
 	
 	public PropostaServiceImpl() {
 		// TODO Auto-generated constructor stub
@@ -79,9 +92,36 @@ public class PropostaServiceImpl implements PropostaService {
 	}
 
 	@Override
-	public boolean votar(VotacaoDTO votacao) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean votar(VotacaoDTO votacaoDTO) {
+		List<Deputado> deputados = pessoaService.findAllDeputado();
+		String base = partidoService.baseGovernista();
+		Proposta proposta = propostaService.findByCodigo(votacaoDTO.getCodigo());
+		int votos = 0;
+		for (Deputado deputado : deputados) {
+			if (votacaoDTO.getStatusGovernista().equals("GOVERNISTA")) {
+				if (base.contains(deputado.getPartido())) {
+					votos++;
+				}
+			}
+			else if (votacaoDTO.getStatusGovernista().equals("OPOSICAO")) {
+				if (!base.contains(deputado.getPartido())) {
+					votos++;
+				}
+			}
+			else {
+				boolean aprova = false;
+				for (String interesse : deputado.getInteresses().split(",")) {
+					if (proposta.getInteresses().contains(interesse)) {
+						aprova = true;
+					}
+				}
+				if (aprova) {
+					votos++;
+				}
+			}
+		}
+		
+		return votos > (deputados.size()/2);
 	}
 	
 	

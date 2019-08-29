@@ -23,6 +23,8 @@ public interface PessoaService {
 	 */
 	List<Pessoa> findAll();
 	
+	List<Deputado> findAllDeputado();
+	
 	/**
 	 * Save Pessoa in to database.
 	 * @param Pessoa

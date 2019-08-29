@@ -27,13 +27,6 @@ public class PropostaController {
 	
 	public PropostaController() {}
 	
-	/*
-	String cadastrarPL(String dni, int ano, String ementa, String interesses, String url, boolean conclusivo)
-	String cadastrarPLP(String dni, int ano, String ementa, String interesses, String url, String artigos)
-	String cadastrarPEC(String dni, int ano, String ementa, String interesses, String url, String artigos)
-	String exibirProjeto(String codigo)
-	 */
-	
 	@RequestMapping(value = "/proposta/pl", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Proposta> cadastrarPL(@RequestBody PLDTO proposta) {
 		return new ResponseEntity<>(propostaService.save(proposta), HttpStatus.CREATED);
@@ -59,12 +52,12 @@ public class PropostaController {
 		return new ResponseEntity<String>(propostaService.findByCodigo(codigo).toString(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/proposta/votar", method = RequestMethod.GET)//falta fazer
+	@RequestMapping(value = "/proposta/votar", method = RequestMethod.GET)
 	public ResponseEntity<Boolean> votarComissao(@RequestBody VotacaoDTO votacao) { 
-		return new ResponseEntity<Boolean>(propostaService.votar(votacao), HttpStatus.OK);
+		return new ResponseEntity<>(/*propostaService.votar(votacao), */HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/proposta/tramitacao", method = RequestMethod.GET)//falta fazer
+	@RequestMapping(value = "/proposta/tramitacao", method = RequestMethod.GET)
 	public ResponseEntity<String> exibirTramitacao(@RequestParam String codigo) { 
 		return new ResponseEntity<String>(/*propostaService.findByCodigo(codigo).toString(), */HttpStatus.OK);
 	}

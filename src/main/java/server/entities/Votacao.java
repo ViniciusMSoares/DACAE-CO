@@ -1,12 +1,27 @@
 package server.entities;
 
-import javax.persistence.Entity;
-
-@Entity
 public class Votacao {
 
+	private String comissao;
+	private String status;
+	
 	public Votacao() {
-		// TODO Auto-generated constructor stub
+	}
+
+	public String getComissao() {
+		return comissao;
+	}
+
+	public void setComissao(String comissao) {
+		this.comissao = comissao;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 }

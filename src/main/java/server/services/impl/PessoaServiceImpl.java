@@ -66,4 +66,9 @@ public class PessoaServiceImpl implements PessoaService {
 
 	}
 
+	@Override
+	public List<Deputado> findAllDeputado() {
+		return deputadoRepository.findAll();
+	}
+
 }
