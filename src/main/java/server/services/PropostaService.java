@@ -9,6 +9,7 @@ import server.entities.Proposta;
 import server.entities.DTOs.PECDTO;
 import server.entities.DTOs.PLDTO;
 import server.entities.DTOs.PLPDTO;
+import server.entities.DTOs.VotacaoDTO;
 
 public interface PropostaService {
 
@@ -41,5 +42,7 @@ public interface PropostaService {
 	 * @param dni
 	 */
 	void delete(String partido);
+
+	boolean votar(VotacaoDTO votacao);
 	
 }

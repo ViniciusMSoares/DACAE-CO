@@ -16,6 +16,7 @@ import server.entities.Proposta;
 import server.entities.DTOs.PECDTO;
 import server.entities.DTOs.PLDTO;
 import server.entities.DTOs.PLPDTO;
+import server.entities.DTOs.VotacaoDTO;
 import server.services.PropostaService;
 
 @Controller
@@ -56,6 +57,16 @@ public class PropostaController {
 	@RequestMapping(value = "/proposta/codigo", method = RequestMethod.GET)
 	public ResponseEntity<String> exibirProjeto(@RequestParam String codigo) { 
 		return new ResponseEntity<String>(propostaService.findByCodigo(codigo).toString(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/proposta/votar", method = RequestMethod.GET)//falta fazer
+	public ResponseEntity<Boolean> votarComissao(@RequestBody VotacaoDTO votacao) { 
+		return new ResponseEntity<Boolean>(propostaService.votar(votacao), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/proposta/tramitacao", method = RequestMethod.GET)//falta fazer
+	public ResponseEntity<String> exibirTramitacao(@RequestParam String codigo) { 
+		return new ResponseEntity<String>(/*propostaService.findByCodigo(codigo).toString(), */HttpStatus.OK);
 	}
 	
 }

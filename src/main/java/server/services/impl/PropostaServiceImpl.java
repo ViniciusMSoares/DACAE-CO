@@ -12,6 +12,7 @@ import server.entities.Proposta;
 import server.entities.DTOs.PECDTO;
 import server.entities.DTOs.PLDTO;
 import server.entities.DTOs.PLPDTO;
+import server.entities.DTOs.VotacaoDTO;
 import server.repositories.PECRepository;
 import server.repositories.PLPRepository;
 import server.repositories.PLRepository;
@@ -75,7 +76,14 @@ public class PropostaServiceImpl implements PropostaService {
 	@Override
 	public void delete(String partido) {
 		// TODO Auto-generated method stub
-		
 	}
+
+	@Override
+	public boolean votar(VotacaoDTO votacao) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
 
 }
