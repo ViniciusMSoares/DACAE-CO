@@ -54,7 +54,7 @@ public class PropostaController {
 	
 	@RequestMapping(value = "/proposta/votar", method = RequestMethod.GET)
 	public ResponseEntity<Boolean> votarComissao(@RequestBody VotacaoDTO votacao) { 
-		return new ResponseEntity<>(/*propostaService.votar(votacao), */HttpStatus.OK);
+		return new ResponseEntity<>(propostaService.votar(votacao), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/proposta/tramitacao", method = RequestMethod.GET)

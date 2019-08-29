@@ -9,12 +9,14 @@ import server.entities.Deputado;
 import server.entities.PEC;
 import server.entities.PL;
 import server.entities.PLP;
+import server.entities.Pessoa;
 import server.entities.Proposta;
 import server.entities.Votacao;
 import server.entities.DTOs.PECDTO;
 import server.entities.DTOs.PLDTO;
 import server.entities.DTOs.PLPDTO;
 import server.entities.DTOs.VotacaoDTO;
+import server.repositories.DeputadoRepository;
 import server.repositories.PECRepository;
 import server.repositories.PLPRepository;
 import server.repositories.PLRepository;
@@ -47,6 +49,9 @@ public class PropostaServiceImpl implements PropostaService {
 	@Autowired
 	private PropostaService propostaService;
 	
+	@Autowired
+	private DeputadoRepository deputadoRepository;
+	
 	public PropostaServiceImpl() {
 		// TODO Auto-generated constructor stub
 	}
@@ -71,18 +76,21 @@ public class PropostaServiceImpl implements PropostaService {
 	@Override
 	public PL save(PLDTO proposta) {
 		PL pl = new PL(proposta.getAutor(), proposta.getAno(), proposta.getEmenta(), proposta.getInteresses(), proposta.getEnderecoDoc(), proposta.isConclusivo());
+		this.atualizaLeisAutor(proposta.getAutor());
 		return plRepository.save(pl);
 	}
 
 	@Override
 	public PLP save(PLPDTO proposta) {
 		PLP plp = new PLP(proposta.getAutor(), proposta.getAno(), proposta.getEmenta(), proposta.getInteresses(), proposta.getEnderecoDoc(), proposta.getArtigo());
+		this.atualizaLeisAutor(proposta.getAutor());
 		return plpRepository.save(plp);
 	}
 
 	@Override
 	public PEC save(PECDTO proposta) {
 		PEC pec = new PEC(proposta.getAutor(), proposta.getAno(), proposta.getEmenta(), proposta.getInteresses(), proposta.getEnderecoDoc(), proposta.getArtigo());
+		this.atualizaLeisAutor(proposta.getAutor());
 		return pecRepository.save(pec);
 	}
 
@@ -124,6 +132,12 @@ public class PropostaServiceImpl implements PropostaService {
 		return votos > (deputados.size()/2);
 	}
 	
+	
+	private void atualizaLeisAutor(String dni) {
+		 Deputado autor = (Deputado) pessoaService.findByDni(dni);
+		 autor.setNumLeis(autor.getNumLeis()+1);
+		 deputadoRepository.save(autor);
+	}
 	
 
 }
