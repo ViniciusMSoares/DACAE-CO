@@ -2,8 +2,11 @@ package server.services;
 
 import java.util.List;
 
+import server.entities.Deputado;
 import server.entities.Pessoa;
+import server.entities.DTOs.DeputadoDTO;
 import server.entities.DTOs.PessoaDTO;
+import server.entities.DTOs.PessoaSPDTO;
 
 public interface PessoaService {
 	
@@ -25,7 +28,11 @@ public interface PessoaService {
 	 * @param Pessoa
 	 * @return
 	 */
-	Pessoa save(PessoaDTO elemento);
+	Pessoa save(PessoaDTO pessoa);
+	
+	Pessoa save(PessoaSPDTO pessoa);
+	
+	Deputado save(DeputadoDTO deputado);
 	
 	/**
 	 * Delete Pessoa by dni.
