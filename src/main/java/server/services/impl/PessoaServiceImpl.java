@@ -3,17 +3,22 @@ package server.services.impl;
 import java.util.List;
 import java.util.Optional;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import server.entities.Deputado;
 import server.entities.Pessoa;
 import server.entities.DTOs.DeputadoDTO;
+import server.entities.DTOs.LoginDTO;
 import server.entities.DTOs.PessoaDTO;
 import server.entities.DTOs.PessoaSPDTO;
 import server.repositories.DeputadoRepository;
 import server.repositories.PessoaRepository;
+import server.security.TokenAuthenticationService;
 import server.services.PessoaService;
 
 @Service
@@ -42,13 +47,13 @@ public class PessoaServiceImpl implements PessoaService {
 
 	@Override
 	public Pessoa save(PessoaDTO pessoaDTO) {
-		Pessoa pessoa = new Pessoa(pessoaDTO.getNome(), pessoaDTO.getDni(), pessoaDTO.getEstado(), pessoaDTO.getInteresses(), pessoaDTO.getPartido());
+		Pessoa pessoa = new Pessoa(pessoaDTO.getNome(), pessoaDTO.getDni(), pessoaDTO.getEstado(), pessoaDTO.getInteresses(), pessoaDTO.getSenha(), pessoaDTO.getPartido());
 		return pessoaRepository.save(pessoa);
 	}
 	
 	@Override
 	public Pessoa save(PessoaSPDTO pessoaSPDTO) {
-		Pessoa pessoa = new Pessoa(pessoaSPDTO.getNome(), pessoaSPDTO.getDni(), pessoaSPDTO.getEstado(), pessoaSPDTO.getInteresses());
+		Pessoa pessoa = new Pessoa(pessoaSPDTO.getNome(), pessoaSPDTO.getDni(), pessoaSPDTO.getEstado(), pessoaSPDTO.getInteresses(), pessoaSPDTO.getSenha());
 		return pessoaRepository.save(pessoa);
 	}
 	
@@ -69,6 +74,29 @@ public class PessoaServiceImpl implements PessoaService {
 	@Override
 	public List<Deputado> findAllDeputado() {
 		return deputadoRepository.findAll();
+	}
+
+	@Override
+	public ResponseEntity<String> login(LoginDTO login) {
+        Pessoa pessoa = this.findByDni(login.getDni());
+        JSONObject body = new JSONObject();
+        if (pessoa == null || !pessoa.getSenha().equals(login.getSenha())){
+            body.put("token", JSONObject.NULL);
+            body.put("message", "Dni ou senha não conferem.");
+            body.put("pessoa", JSONObject.NULL);
+
+            return new ResponseEntity<>(body.toString(), HttpStatus.FORBIDDEN);
+        }
+
+        body.put("token", TokenAuthenticationService.generateToken(pessoa.getDni()));//falta gerar o token
+        body.put("message", "Usuario Autorizado.");
+
+        JSONObject jsonUser = new JSONObject();
+        jsonUser.put("dni", pessoa.getDni());
+        jsonUser.put("nome", pessoa.getNome());
+
+        body.put("pessoa", jsonUser);
+        return new ResponseEntity<>(body.toString(), HttpStatus.ACCEPTED);
 	}
 
 }

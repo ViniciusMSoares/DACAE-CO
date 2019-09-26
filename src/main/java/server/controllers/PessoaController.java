@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import server.entities.Pessoa;
 import server.entities.DTOs.DeputadoDTO;
+import server.entities.DTOs.LoginDTO;
 import server.entities.DTOs.PessoaDTO;
 import server.entities.DTOs.PessoaSPDTO;
 import server.services.PessoaService;
@@ -49,6 +50,11 @@ public class PessoaController {
 	@RequestMapping(value = "/pessoa/list", method = RequestMethod.GET)
 	public ResponseEntity<List<Pessoa>> getPessoaList() { 
 		return new ResponseEntity<List<Pessoa>>(pessoaService.findAll(), HttpStatus.OK);
+	}
+	
+	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public ResponseEntity<String> login(@RequestBody LoginDTO login) {
+        return pessoaService.login(login);
 	}
 	
 }

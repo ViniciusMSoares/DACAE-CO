@@ -6,6 +6,8 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 @Table
@@ -17,22 +19,26 @@ public class Pessoa {
 	private String estado;
 	private String interesses;
 	private String partido;
+	@JsonIgnore
+	private String senha;
 	
 	public Pessoa () {}
 	
-	public Pessoa (String nome, String dni, String estado, String interesses) {
+	public Pessoa (String nome, String dni, String estado, String interesses, String senha) {
 		this.nome = nome;
 		this.dni = dni;
 		this.estado = estado;
 		this.interesses = interesses;
+		this.senha = senha;
 	}
 	
-	public Pessoa (String nome, String dni, String estado, String interesses, String partido) {
+	public Pessoa (String nome, String dni, String estado, String interesses, String senha, String partido) {
 		this.nome = nome;
 		this.dni = dni;
 		this.estado = estado;
 		this.interesses = interesses;
 		this.partido = partido;
+		this.senha = senha;
 	}
 
 	public String getNome() {
@@ -94,6 +100,14 @@ public class Pessoa {
 			result = " - " + interesses;
 		}
 		return result;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 }

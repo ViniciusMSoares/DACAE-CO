@@ -7,6 +7,7 @@ public class PessoaDTO {
 	private String estado;
 	private String interesses;
 	private String partido;
+	private String senha;
 	
 	public PessoaDTO () {
 	}
@@ -49,6 +50,14 @@ public class PessoaDTO {
 
 	public void setPartido(String partido) {
 		this.partido = partido;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 }
