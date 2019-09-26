@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,12 +43,12 @@ public class PessoaController {
 		return new ResponseEntity<>(pessoaService.save(deputado), HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(value = "/pessoa/dni", method = RequestMethod.GET)
-	public ResponseEntity<String> exibirPessoa(@RequestParam String dni) { 
+	@RequestMapping(value = "/pessoa/{dni}", method = RequestMethod.GET)
+	public ResponseEntity<String> exibirPessoa(@PathVariable("dni") String dni) { 
 		return new ResponseEntity<String>(pessoaService.findByDni(dni).toString(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/pessoa/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/pessoa", method = RequestMethod.GET)
 	public ResponseEntity<List<Pessoa>> getPessoaList() { 
 		return new ResponseEntity<List<Pessoa>>(pessoaService.findAll(), HttpStatus.OK);
 	}
