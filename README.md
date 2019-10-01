@@ -33,3 +33,13 @@ mvn spring-boot:run
 ```
 
 #### Por padrão está sendo utilizado o H2 database, você pode configurar seu banco de dados em application.properties
+
+## Authentication
+A autenticação do usuário é feita pelo POST '/login', passando como corpo o JSON:
+{
+  "dni": "123456789-0",
+  "senha": "senha"
+}
+
+É gerado um token JWT para o usuário. O token é solicitado no header de algumas requisições, e  utilizado para identificar o usuário logado.
+
