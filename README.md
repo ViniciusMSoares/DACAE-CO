@@ -10,3 +10,26 @@ O sistema é baseado na arquitetura Controller-Service-Repository. Pessoas, Depu
 Diagrama ER
 
 ![Diagrama ER](https://github.com/ViniciusMSoares/DACAE-CO/blob/master/daca.png)
+
+### Como rodar:
+
+#### Requisitos:
+
+* Java 8
+* Git
+* Maven
+
+**1- Clone a aplicação**
+
+```bash
+git clone https://github.com/ViniciusMSoares/DACAE-CO.git
+```
+
+**2- Execute a aplicação com o maven na pasta criada**
+
+```bash
+cd DACAE-CO
+mvn spring-boot:run
+```
+
+#### Por padrão está sendo utilizado o H2 database, você pode configurar seu banco de dados em application.properties
