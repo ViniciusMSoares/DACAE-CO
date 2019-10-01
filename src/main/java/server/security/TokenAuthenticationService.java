@@ -19,7 +19,23 @@ public class TokenAuthenticationService {
 				.signWith(SignatureAlgorithm.HS512, SECRET)
 				.compact();
 		
+		System.out.println(getAuth(JWT));
 		return JWT;
+	}
+	
+	public static String getAuth(String token) {
+		if (token != null) {
+			String dni = Jwts.parser()
+					.setSigningKey(SECRET)
+					.parseClaimsJws(token.replace(TOKEN_PREFIX, ""))
+					.getBody()
+					.getSubject();
+			
+			if (dni != null) {
+				return dni;
+			}
+		}
+		return null;
 	}
 	
 }

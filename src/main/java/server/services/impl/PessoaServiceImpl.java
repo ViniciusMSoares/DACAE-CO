@@ -58,8 +58,8 @@ public class PessoaServiceImpl implements PessoaService {
 	}
 	
 	@Override
-	public Deputado save(DeputadoDTO deputadoDTO) {
-		Pessoa pessoa = this.findByDni(deputadoDTO.getDni());
+	public Deputado save(DeputadoDTO deputadoDTO, String token) {
+		Pessoa pessoa = this.findByDni(TokenAuthenticationService.getAuth(token));
 		Deputado deputado = new Deputado(pessoa, deputadoDTO.getDataDeInicio());
 		pessoaRepository.delete(pessoa);
 		return deputadoRepository.save(deputado);

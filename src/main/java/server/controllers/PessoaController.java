@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,8 +40,8 @@ public class PessoaController {
 	}
 	
 	@RequestMapping(value = "/deputado", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<Pessoa> cadastrarDeputado(@RequestBody DeputadoDTO deputado) {
-		return new ResponseEntity<>(pessoaService.save(deputado), HttpStatus.CREATED);
+	public ResponseEntity<Pessoa> cadastrarDeputado(@RequestHeader String token ,@RequestBody DeputadoDTO deputado) {
+		return new ResponseEntity<>(pessoaService.save(deputado, token), HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/pessoa/{dni}", method = RequestMethod.GET)

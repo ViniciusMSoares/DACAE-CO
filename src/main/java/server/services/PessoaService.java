@@ -37,7 +37,7 @@ public interface PessoaService {
 	
 	Pessoa save(PessoaSPDTO pessoa);
 	
-	Deputado save(DeputadoDTO deputado);
+	Deputado save(DeputadoDTO deputado, String token);
 	
 	/**
 	 * Delete Pessoa by dni.
