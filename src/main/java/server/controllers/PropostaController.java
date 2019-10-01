@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,13 +28,6 @@ public class PropostaController {
 	
 	public PropostaController() {}
 	
-	/*
-	String cadastrarPL(String dni, int ano, String ementa, String interesses, String url, boolean conclusivo)
-	String cadastrarPLP(String dni, int ano, String ementa, String interesses, String url, String artigos)
-	String cadastrarPEC(String dni, int ano, String ementa, String interesses, String url, String artigos)
-	String exibirProjeto(String codigo)
-	 */
-	
 	@RequestMapping(value = "/proposta/pl", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Proposta> cadastrarPL(@RequestBody PLDTO proposta) {
 		return new ResponseEntity<>(propostaService.save(proposta), HttpStatus.CREATED);
@@ -49,23 +43,23 @@ public class PropostaController {
 		return new ResponseEntity<>(propostaService.save(proposta), HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(value = "/proposta/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/proposta", method = RequestMethod.GET)
 	public ResponseEntity<List<Proposta>> getPropostaList() { 
 		return new ResponseEntity<List<Proposta>>(propostaService.findAll(), HttpStatus.OK);
 	}
 
-	@RequestMapping(value = "/proposta/codigo", method = RequestMethod.GET)
-	public ResponseEntity<String> exibirProjeto(@RequestParam String codigo) { 
+	@RequestMapping(value = "/proposta/{codigo}", method = RequestMethod.GET)
+	public ResponseEntity<String> exibirProjeto(@PathVariable("codigo") String codigo) { 
 		return new ResponseEntity<String>(propostaService.findByCodigo(codigo).toString(), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/proposta/votar", method = RequestMethod.GET)//falta fazer
-	public ResponseEntity<Boolean> votarComissao(@RequestBody VotacaoDTO votacao) { 
-		return new ResponseEntity<Boolean>(propostaService.votar(votacao), HttpStatus.OK);
+	@RequestMapping(value = "/proposta/votar", method = RequestMethod.GET)
+	public ResponseEntity<Boolean> votarComissao(@RequestBody VotacaoDTO votacao) {
+		return new ResponseEntity<>(propostaService.votar(votacao), HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/proposta/tramitacao", method = RequestMethod.GET)//falta fazer
-	public ResponseEntity<String> exibirTramitacao(@RequestParam String codigo) { 
+	@RequestMapping(value = "/tramitacao/{codigo}", method = RequestMethod.GET)
+	public ResponseEntity<String> exibirTramitacao(@PathVariable("codigo") String codigo) {
 		return new ResponseEntity<String>(/*propostaService.findByCodigo(codigo).toString(), */HttpStatus.OK);
 	}
 	

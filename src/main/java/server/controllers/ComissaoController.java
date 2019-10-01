@@ -26,7 +26,7 @@ public class ComissaoController {
 		return new ResponseEntity<>(comissaoService.save(comissao), HttpStatus.CREATED);
 	}
 	
-	@RequestMapping(value = "/comissao/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/comissao", method = RequestMethod.GET)
 	public ResponseEntity<List<Comissao>> getComissaoList() { 
 		return new ResponseEntity<List<Comissao>>(comissaoService.findAll(), HttpStatus.OK);
 	}

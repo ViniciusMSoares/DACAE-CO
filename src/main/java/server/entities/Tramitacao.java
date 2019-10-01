@@ -1,8 +1,5 @@
 package server.entities;
 
-import javax.persistence.Entity;
-
-@Entity
 public class Tramitacao {
 
 	public Tramitacao() {

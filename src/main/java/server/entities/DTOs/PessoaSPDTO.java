@@ -6,6 +6,7 @@ public class PessoaSPDTO {
 	private String dni;
 	private String estado;
 	private String interesses;
+	private String senha;
 	
 	public PessoaSPDTO () {
 	}
@@ -40,6 +41,14 @@ public class PessoaSPDTO {
 
 	public void setInteresses(String interesses) {
 		this.interesses = interesses;
+	}
+
+	public String getSenha() {
+		return senha;
+	}
+
+	public void setSenha(String senha) {
+		this.senha = senha;
 	}
 
 }
