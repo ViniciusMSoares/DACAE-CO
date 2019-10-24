@@ -3,6 +3,7 @@ package server.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,7 @@ public class PessoaController {
 	public ResponseEntity<String> exibirPessoa(@PathVariable("dni") String dni) { 
 		return new ResponseEntity<String>(pessoaService.findByDni(dni).toString(), HttpStatus.OK);
 	}
+	
 	
 	@RequestMapping(value = "/pessoa", method = RequestMethod.GET)
 	public ResponseEntity<List<Pessoa>> getPessoaList() { 

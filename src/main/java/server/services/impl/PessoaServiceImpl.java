@@ -2,9 +2,12 @@ package server.services.impl;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Example;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,17 +44,25 @@ public class PessoaServiceImpl implements PessoaService {
 	}
 
 	@Override
+	@Cacheable(cacheNames = "Pessoa", key="#root.methodName")
 	public List<Pessoa> findAll() {
+		System.out.println(">>>>> Essa operação tem cache <<<<<");
+		try {
+			TimeUnit.SECONDS.sleep(1);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return pessoaRepository.findAll();
 	}
 
 	@Override
+	@CacheEvict(cacheNames = "Pessoa", allEntries = true)
 	public Pessoa save(PessoaDTO pessoaDTO) {
 		Pessoa pessoa = new Pessoa(pessoaDTO.getNome(), pessoaDTO.getDni(), pessoaDTO.getEstado(), pessoaDTO.getInteresses(), pessoaDTO.getSenha(), pessoaDTO.getPartido());
 		return pessoaRepository.save(pessoa);
 	}
 	
-	@Override
 	public Pessoa save(PessoaSPDTO pessoaSPDTO) {
 		Pessoa pessoa = new Pessoa(pessoaSPDTO.getNome(), pessoaSPDTO.getDni(), pessoaSPDTO.getEstado(), pessoaSPDTO.getInteresses(), pessoaSPDTO.getSenha());
 		return pessoaRepository.save(pessoa);
