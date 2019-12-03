@@ -43,3 +43,17 @@ A autenticação do usuário é feita pelo POST '/login', passando como corpo o 
 
 É gerado um token JWT para o usuário. O token é solicitado no header de algumas requisições, e  utilizado para identificar o usuário logado.
 
+## Reactive
+
+A aplicação apresenta uma estruturação reactive simples, composta por um handler, um router e um client.
+
+A classe router gerencia a rota e retorna o valor provido pela respectiva classe handler para o client, que consome o serviço.
+
+## Kubernetes
+
+Foi utilizado o Kubernetes Engine, do Google Cloud Platform, para fazer uma estruturação em Kubernetes da aplicação.
+
+O Kubernetes acessa uma imagem da aplicação, criada pelo Docker, para o deploy. A aplicação foi escalada com 3 pods, que podem receber tráfego após criar um service que acessa um Load balancer através dos pods.
+
+É possível acessar e testar o cluster em: http://35.239.223.114:8080/swagger-ui.html.
+
