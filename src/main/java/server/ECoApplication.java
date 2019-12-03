@@ -5,13 +5,14 @@ import java.time.Duration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cache.annotation.EnableCaching;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Bean;/*
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
-import org.springframework.data.redis.serializer.RedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;*/
 
+import server.clients.Client;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.spi.DocumentationType;
@@ -25,6 +26,9 @@ public class ECoApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(ECoApplication.class, args);
+		
+	    Client gwc = new Client();
+	    System.out.println(gwc.getResult());
 	}
 	
     @Bean
@@ -36,6 +40,7 @@ public class ECoApplication {
                 .build();
     }
 
+    /*
     @Bean
     public RedisCacheManager redisCacheManager(LettuceConnectionFactory lettuceConnectionFactory) {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig()
@@ -46,6 +51,6 @@ public class ECoApplication {
 
        return RedisCacheManager.RedisCacheManagerBuilder.fromConnectionFactory(lettuceConnectionFactory)
                         .cacheDefaults(redisCacheConfiguration).build();
-    }
+    }*/
 
 }

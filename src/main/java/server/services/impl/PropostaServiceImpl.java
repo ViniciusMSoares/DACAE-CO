@@ -102,7 +102,7 @@ public class PropostaServiceImpl implements PropostaService {
 	@Override
 	public boolean votar(VotacaoDTO votacaoDTO) {
 		List<Deputado> deputados = pessoaService.findAllDeputado();
-		String base = partidoService.baseGovernista();
+		String base = "ABC";//partidoService.baseGovernista();
 		Proposta proposta = propostaService.findByCodigo(votacaoDTO.getCodigo());
 		int votos = 0;
 		for (Deputado deputado : deputados) {

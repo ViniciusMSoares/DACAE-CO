@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import server.clients.Client;
 import server.entities.Comissao;
 import server.entities.DTOs.ComissaoDTO;
 import server.services.ComissaoService;
@@ -20,6 +21,8 @@ public class ComissaoController {
 
 	@Autowired
 	private ComissaoService comissaoService;
+	
+	private Client client;
 
 	@RequestMapping(value = "/comissao", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
 	public ResponseEntity<Comissao> cadastrarPessoa(@RequestBody ComissaoDTO comissao) {
