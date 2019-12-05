@@ -1,0 +1,66 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+  creationTimestamp: "2019-12-03T22:30:14Z"
+  generation: 2
+  labels:
+    run: dacae-co
+  name: dacae-co
+  namespace: default
+  resourceVersion: "21928"
+  selfLink: /apis/extensions/v1beta1/namespaces/default/deployments/dacae-co
+  uid: 79a56c0f-161c-11ea-b33a-42010a8001b7
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 3
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      run: dacae-co
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        run: dacae-co
+    spec:
+      containers:
+      - image: gcr.io/dacae-co-260916/docker-e-co
+        imagePullPolicy: Always
+        name: dacae-co
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+status:
+  availableReplicas: 3
+  conditions:
+  - lastTransitionTime: "2019-12-03T22:30:14Z"
+    lastUpdateTime: "2019-12-03T22:30:16Z"
+    message: ReplicaSet "dacae-co-667d5cf559" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2019-12-03T22:40:24Z"
+    lastUpdateTime: "2019-12-03T22:40:24Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  observedGeneration: 2
+  readyReplicas: 3
+  replicas: 3
+  updatedReplicas: 3
