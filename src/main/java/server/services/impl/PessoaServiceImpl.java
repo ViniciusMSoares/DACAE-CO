@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import server.entities.Deputado;
 import server.entities.Pessoa;
 import server.entities.DTOs.DeputadoDTO;
@@ -45,7 +47,7 @@ public class PessoaServiceImpl implements PessoaService {
 
 	@Override
 	@Cacheable(cacheNames = "Pessoa", key="#root.methodName")
-	public List<Pessoa> findAll() {
+	public Flux<Pessoa> findAll() {
 		System.out.println(">>>>> Essa operação tem cache <<<<<");
 		try {
 			TimeUnit.SECONDS.sleep(1);
@@ -58,18 +60,18 @@ public class PessoaServiceImpl implements PessoaService {
 
 	@Override
 	@CacheEvict(cacheNames = "Pessoa", allEntries = true)
-	public Pessoa save(PessoaDTO pessoaDTO) {
+	public Mono<Pessoa> save(PessoaDTO pessoaDTO) {
 		Pessoa pessoa = new Pessoa(pessoaDTO.getNome(), pessoaDTO.getDni(), pessoaDTO.getEstado(), pessoaDTO.getInteresses(), pessoaDTO.getSenha(), pessoaDTO.getPartido());
 		return pessoaRepository.save(pessoa);
 	}
 	
-	public Pessoa save(PessoaSPDTO pessoaSPDTO) {
+	public Mono<Pessoa> save(PessoaSPDTO pessoaSPDTO) {
 		Pessoa pessoa = new Pessoa(pessoaSPDTO.getNome(), pessoaSPDTO.getDni(), pessoaSPDTO.getEstado(), pessoaSPDTO.getInteresses(), pessoaSPDTO.getSenha());
 		return pessoaRepository.save(pessoa);
 	}
 	
 	@Override
-	public Deputado save(DeputadoDTO deputadoDTO, String token) {
+	public Mono<Deputado> save(DeputadoDTO deputadoDTO, String token) {
 		Pessoa pessoa = this.findByDni(TokenAuthenticationService.getAuth(token));
 		Deputado deputado = new Deputado(pessoa, deputadoDTO.getDataDeInicio());
 		pessoaRepository.delete(pessoa);
@@ -83,7 +85,7 @@ public class PessoaServiceImpl implements PessoaService {
 	}
 
 	@Override
-	public List<Deputado> findAllDeputado() {
+	public Flux<Deputado> findAllDeputado() {
 		return deputadoRepository.findAll();
 	}
 

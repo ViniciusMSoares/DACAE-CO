@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import server.entities.Proposta;
 import server.entities.DTOs.PECDTO;
 import server.entities.DTOs.PLDTO;
@@ -29,23 +31,23 @@ public class PropostaController {
 	public PropostaController() {}
 	
 	@RequestMapping(value = "/proposta/pl", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<Proposta> cadastrarPL(@RequestBody PLDTO proposta) {
+	public ResponseEntity cadastrarPL(@RequestBody PLDTO proposta) {
 		return new ResponseEntity<>(propostaService.save(proposta), HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/proposta/plp", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<Proposta> cadastrarPLP(@RequestBody PLPDTO proposta) {
+	public ResponseEntity cadastrarPLP(@RequestBody PLPDTO proposta) {
 		return new ResponseEntity<>(propostaService.save(proposta), HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/proposta/pec", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<Proposta> cadastrarPEC(@RequestBody PECDTO proposta) {
+	public ResponseEntity cadastrarPEC(@RequestBody PECDTO proposta) {
 		return new ResponseEntity<>(propostaService.save(proposta), HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/proposta", method = RequestMethod.GET)
-	public ResponseEntity<List<Proposta>> getPropostaList() { 
-		return new ResponseEntity<List<Proposta>>(propostaService.findAll(), HttpStatus.OK);
+	public ResponseEntity<Flux<Proposta>> getPropostaList() { 
+		return new ResponseEntity<Flux<Proposta>>(propostaService.findAll(), HttpStatus.OK);
 	}
 
 	@RequestMapping(value = "/proposta/{codigo}", method = RequestMethod.GET)

@@ -2,6 +2,8 @@ package server.services;
 
 import java.util.List;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import server.entities.Partido;
 import server.entities.DTOs.PartidoDTO;
 
@@ -12,20 +14,20 @@ public interface PartidoService {
 	 * @param nome
 	 * @return
 	 */
-	Partido findByNome(String nome);
+	Mono<Partido> findByNome(String nome);
 	
 	/**
 	 * Find all Partido.
 	 * @return All Partido in the database;
 	 */
-	List<Partido> findAll();
+	Flux<Partido> findAll();
 	
 	/**
 	 * Save Partido in to database.
 	 * @param Partido
 	 * @return
 	 */
-	Partido save(PartidoDTO partido);
+	Mono<Partido> save(PartidoDTO partido);
 	
 	/**
 	 * Delete partido by nome.

@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import server.entities.Partido;
 import server.entities.DTOs.PartidoDTO;
 import server.repositories.PartidoRepository;
@@ -22,18 +24,18 @@ public class PartidoServiceImpl implements PartidoService {
 	}
 
 	@Override
-	public Partido findByNome(String nome) {
+	public Mono<Partido> findByNome(String nome) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Partido> findAll() {
+	public Flux<Partido> findAll() {
 		return partidoRepository.findAll();
 	}
 
 	@Override
-	public Partido save(PartidoDTO partidoDTO) {
+	public Mono<Partido> save(PartidoDTO partidoDTO) {
 		Partido partido = new Partido(partidoDTO.getPartido());
 		return partidoRepository.save(partido);
 	}
@@ -46,7 +48,7 @@ public class PartidoServiceImpl implements PartidoService {
 
 	@Override
 	public String baseGovernista() {
-		List<Partido> partidos = partidoRepository.findAll();
+		List<Partido> partidos = (List<Partido>) partidoRepository.findAll();
 		Collections.sort(partidos);
 		String base = "";
 		

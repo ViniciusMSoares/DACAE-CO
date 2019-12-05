@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import server.entities.Comissao;
 import server.entities.DTOs.ComissaoDTO;
 import server.repositories.ComissaoRepository;
@@ -17,18 +19,18 @@ public class ComissaoServiceImpl implements ComissaoService {
 	private ComissaoRepository comissaoRepository;
 
 	@Override
-	public Comissao findByNome(String nome) {
+	public Mono<Comissao> findByNome(String nome) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Comissao> findAll() {
+	public Flux<Comissao> findAll() {
 		return comissaoRepository.findAll();
 	}
 
 	@Override
-	public Comissao save(ComissaoDTO comissaoDTO) {
+	public Mono<Comissao> save(ComissaoDTO comissaoDTO) {
 		Comissao comissao = new Comissao(comissaoDTO.getTema(), comissaoDTO.getPoliticos());
 		return comissaoRepository.save(comissao);
 	}

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import reactor.core.publisher.Mono;
 import server.entities.Partido;
 import server.entities.Pessoa;
 import server.entities.DTOs.PartidoDTO;
@@ -25,7 +26,7 @@ public class PartidoController {
 	private PartidoService partidoService;
 	
 	@RequestMapping(value = "/partido", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<Partido> cadastrarPartido(@RequestBody PartidoDTO partido) {
+	public ResponseEntity<Mono<Partido>> cadastrarPartido(@RequestBody PartidoDTO partido) {
 		return new ResponseEntity<>(partidoService.save(partido), HttpStatus.CREATED);
 	}
 	

@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.http.ResponseEntity;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import server.entities.Deputado;
 import server.entities.Pessoa;
 import server.entities.DTOs.DeputadoDTO;
@@ -24,20 +26,20 @@ public interface PessoaService {
 	 * Find all Pessoa.
 	 * @return All Pessoa in the database;
 	 */
-	List<Pessoa> findAll();
+	Flux<Pessoa> findAll();
 	
-	List<Deputado> findAllDeputado();
+	Flux<Deputado> findAllDeputado();
 	
 	/**
 	 * Save Pessoa in to database.
 	 * @param Pessoa
 	 * @return
 	 */
-	Pessoa save(PessoaDTO pessoa);
+	Mono<Pessoa> save(PessoaDTO pessoa);
 	
-	Pessoa save(PessoaSPDTO pessoa);
+	Mono<Pessoa> save(PessoaSPDTO pessoa);
 	
-	Deputado save(DeputadoDTO deputado, String token);
+	Mono<Deputado> save(DeputadoDTO deputado, String token);
 	
 	/**
 	 * Delete Pessoa by dni.

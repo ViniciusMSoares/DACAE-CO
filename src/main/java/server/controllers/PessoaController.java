@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import reactor.core.publisher.Flux;
 import server.entities.Pessoa;
 import server.entities.DTOs.DeputadoDTO;
 import server.entities.DTOs.LoginDTO;
@@ -31,17 +32,17 @@ public class PessoaController {
 	private PessoaService pessoaService;
 
 	@RequestMapping(value = "/pessoa", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<Pessoa> cadastrarPessoa(@RequestBody PessoaDTO pessoa) {
+	public ResponseEntity cadastrarPessoa(@RequestBody PessoaDTO pessoa) {
 		return new ResponseEntity<>(pessoaService.save(pessoa), HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/pessoasp", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<Pessoa> cadastrarPessoa(@RequestBody PessoaSPDTO pessoaSP) {
+	public ResponseEntity cadastrarPessoa(@RequestBody PessoaSPDTO pessoaSP) {
 		return new ResponseEntity<>(pessoaService.save(pessoaSP), HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/deputado", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<Pessoa> cadastrarDeputado(@RequestHeader String token ,@RequestBody DeputadoDTO deputado) {
+	public ResponseEntity cadastrarDeputado(@RequestHeader String token ,@RequestBody DeputadoDTO deputado) {
 		return new ResponseEntity<>(pessoaService.save(deputado, token), HttpStatus.CREATED);
 	}
 	
@@ -52,8 +53,8 @@ public class PessoaController {
 	
 	
 	@RequestMapping(value = "/pessoa", method = RequestMethod.GET)
-	public ResponseEntity<List<Pessoa>> getPessoaList() { 
-		return new ResponseEntity<List<Pessoa>>(pessoaService.findAll(), HttpStatus.OK);
+	public ResponseEntity<Flux<Pessoa>> getPessoaList() { 
+		return new ResponseEntity<Flux<Pessoa>>(pessoaService.findAll(), HttpStatus.OK);
 	}
 	
 	@RequestMapping(value = "/login", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)

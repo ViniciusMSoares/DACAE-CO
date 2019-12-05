@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import server.entities.Deputado;
 import server.entities.PEC;
 import server.entities.PL;
@@ -58,8 +60,8 @@ public class PropostaServiceImpl implements PropostaService {
 
 	@Override
 	public Proposta findByCodigo(String codigo) {
-		List<Proposta> propostas = propostaRepository.findAll();
-		for (Proposta proposta : propostas) {
+		Flux<Proposta> propostas = propostaRepository.findAll();
+		for (Proposta proposta : (List<Proposta>) propostas) {
 			if (proposta.getCodigo().equals(codigo)) {
 				return proposta;
 			}
@@ -69,26 +71,26 @@ public class PropostaServiceImpl implements PropostaService {
 	}
 
 	@Override
-	public List<Proposta> findAll() {
+	public Flux<Proposta> findAll() {
 		return propostaRepository.findAll();
 	}
 
 	@Override
-	public PL save(PLDTO proposta) {
+	public Mono<PL> save(PLDTO proposta) {
 		PL pl = new PL(proposta.getAutor(), proposta.getAno(), proposta.getEmenta(), proposta.getInteresses(), proposta.getEnderecoDoc(), proposta.isConclusivo());
 		this.atualizaLeisAutor(proposta.getAutor());
 		return plRepository.save(pl);
 	}
 
 	@Override
-	public PLP save(PLPDTO proposta) {
+	public Mono<PLP> save(PLPDTO proposta) {
 		PLP plp = new PLP(proposta.getAutor(), proposta.getAno(), proposta.getEmenta(), proposta.getInteresses(), proposta.getEnderecoDoc(), proposta.getArtigo());
 		this.atualizaLeisAutor(proposta.getAutor());
 		return plpRepository.save(plp);
 	}
 
 	@Override
-	public PEC save(PECDTO proposta) {
+	public Mono<PEC> save(PECDTO proposta) {
 		PEC pec = new PEC(proposta.getAutor(), proposta.getAno(), proposta.getEmenta(), proposta.getInteresses(), proposta.getEnderecoDoc(), proposta.getArtigo());
 		this.atualizaLeisAutor(proposta.getAutor());
 		return pecRepository.save(pec);
@@ -101,11 +103,11 @@ public class PropostaServiceImpl implements PropostaService {
 
 	@Override
 	public boolean votar(VotacaoDTO votacaoDTO) {
-		List<Deputado> deputados = pessoaService.findAllDeputado();
+		Flux<Deputado> deputados = pessoaService.findAllDeputado();
 		String base = "ABC";//partidoService.baseGovernista();
 		Proposta proposta = propostaService.findByCodigo(votacaoDTO.getCodigo());
 		int votos = 0;
-		for (Deputado deputado : deputados) {
+		for (Deputado deputado : (List<Deputado>) deputados) {
 			if (votacaoDTO.getStatusGovernista().equals("GOVERNISTA")) {
 				if (base.contains(deputado.getPartido())) {
 					votos++;
@@ -129,7 +131,7 @@ public class PropostaServiceImpl implements PropostaService {
 			}
 		}
 		
-		return votos > (deputados.size()/2);
+		return votos > (((List<Proposta>) deputados).size()/2);
 	}
 	
 	

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import server.clients.Client;
 import server.entities.Comissao;
 import server.entities.DTOs.ComissaoDTO;
@@ -25,13 +27,13 @@ public class ComissaoController {
 	private Client client;
 
 	@RequestMapping(value = "/comissao", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-	public ResponseEntity<Comissao> cadastrarPessoa(@RequestBody ComissaoDTO comissao) {
+	public ResponseEntity<Mono<Comissao>> cadastrarPessoa(@RequestBody ComissaoDTO comissao) {
 		return new ResponseEntity<>(comissaoService.save(comissao), HttpStatus.CREATED);
 	}
 	
 	@RequestMapping(value = "/comissao", method = RequestMethod.GET)
-	public ResponseEntity<List<Comissao>> getComissaoList() { 
-		return new ResponseEntity<List<Comissao>>(comissaoService.findAll(), HttpStatus.OK);
+	public ResponseEntity<Flux<Comissao>> getComissaoList() { 
+		return new ResponseEntity<Flux<Comissao>>(comissaoService.findAll(), HttpStatus.OK);
 	}
 	
 }

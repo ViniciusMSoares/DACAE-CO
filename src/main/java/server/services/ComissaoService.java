@@ -2,6 +2,8 @@ package server.services;
 
 import java.util.List;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import server.entities.Comissao;
 import server.entities.DTOs.ComissaoDTO;
 
@@ -12,20 +14,20 @@ public interface ComissaoService {
 	 * @param nome
 	 * @return
 	 */
-	Comissao findByNome(String nome);
+	Mono<Comissao> findByNome(String nome);
 	
 	/**
 	 * Find all Comissao.
 	 * @return All Comissao in the database;
 	 */
-	List<Comissao> findAll();
+	Flux<Comissao> findAll();
 	
 	/**
 	 * Save Comissao in to database.
 	 * @param Comissao
 	 * @return
 	 */
-	Comissao save(ComissaoDTO comissao);
+	Mono<Comissao> save(ComissaoDTO comissao);
 	
 	/**
 	 * Delete Comissao by nome.

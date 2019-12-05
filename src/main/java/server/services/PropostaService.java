@@ -2,6 +2,8 @@ package server.services;
 
 import java.util.List;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import server.entities.PEC;
 import server.entities.PL;
 import server.entities.PLP;
@@ -24,18 +26,18 @@ public interface PropostaService {
 	 * Find all Proposta.
 	 * @return All Proposta in the database;
 	 */
-	List<Proposta> findAll();
+	Flux<Proposta> findAll();
 	
 	/**
 	 * Save Proposta in to database.
 	 * @param Proposta
 	 * @return
 	 */
-	PL save(PLDTO proposta);
+	Mono<PL> save(PLDTO proposta);
 	
-	PLP save(PLPDTO proposta);
+	Mono<PLP> save(PLPDTO proposta);
 	
-	PEC save(PECDTO proposta);
+	Mono<PEC> save(PECDTO proposta);
 	
 	/**
 	 * Delete Proposta by nome.
